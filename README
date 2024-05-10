@@ -2,10 +2,9 @@ We are pleased to announce the version 0.7.2 release of Lithomop3d.
 
 See the file INSTALL for building and installation instructions.
 
-Please submit bug reports via the World Wide Web at:
-    http://geodynamics.org/roundup    
+Please report any bugs by opening an issue in the project's github repository at geodynamics/lithomop3d.
 
-Please send all questions by electronic mail to:
-    cig-short@geodynamics.org
+If you have any questions about the software, please post on the CIG forums at:
+    https://community.geodynamics.org/
 
 Lithomop3d is free software.  See the file COPYING for copying conditions.
