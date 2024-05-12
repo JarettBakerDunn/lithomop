@@ -11,7 +11,9 @@ RUN apt-get update && \
     mpich \
     curl \
     libblas-dev \
-    liblapack-dev
+    liblapack-dev \
+    autoconf \
+    automake
 
 RUN useradd \
   --create-home \
@@ -29,8 +31,7 @@ RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapsho
 
 ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
 
-RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.16/pythia-0.8.1.16.tar.gz"; tar -xvf pythia-0.8.1.16.tar.gz; 
-RUN cd pythia-0.8.1.16; curl -L -O "http://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; python setup.py
+RUN git clone "https://github.com/geodynamics/pythia.git";
 
-RUN git clone 'https://github.com/geodynamics/lithomop.git'; cd lithomop;
+RUN git clone 'https://github.com/geodynamics/lithomop.git';
 
