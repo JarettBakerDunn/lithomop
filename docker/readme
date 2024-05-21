@@ -10,3 +10,13 @@ Could not find a functional BLAS. Run with --with-blas-lib=<lib> to indicate the
 
 
  RUN curl -L -O "https://ftp.mcs.anl.gov/pub/petsc/externalpackages/f2cblaslapack-3.8.0.q2.tar.gz"; tar -xvf f2cblaslapack-3.8.0.q2.tar.gz;
+
+
+ autoupdate
+ mkdir aux-config
+ autoreconf
+ automake --add-missing
+ autoreconf
+ ./configure --prefix=$HOME/cig
+ make
+ make install

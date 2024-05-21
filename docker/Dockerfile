@@ -8,12 +8,15 @@ RUN apt-get update && \
     build-essential \
     git \
     python2 \
+    python3 \
+    python2-dev \
     mpich \
     curl \
     libblas-dev \
     liblapack-dev \
     autoconf \
-    automake
+    automake \
+    autoconf-archive
 
 RUN useradd \
   --create-home \
@@ -31,7 +34,7 @@ RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapsho
 
 ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
 
-RUN git clone "https://github.com/geodynamics/pythia.git";
+RUN git clone "https://github.com/geodynamics/pythia.git"; cd pythia; autoupdate; mkdir aux-config;
 
 RUN git clone 'https://github.com/geodynamics/lithomop.git';
 
