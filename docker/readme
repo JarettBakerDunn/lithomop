@@ -20,3 +20,6 @@ Could not find a functional BLAS. Run with --with-blas-lib=<lib> to indicate the
  ./configure --prefix=$HOME/cig
  make
  make install
+
+
+when trying configure on lithomop, it now seems petsc is the problem: ./configure: line 3715: `CIT_PATH_PETSC(2.3.3)'

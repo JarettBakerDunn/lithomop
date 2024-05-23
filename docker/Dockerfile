@@ -7,26 +7,28 @@ RUN apt-get update && \
     gfortran \
     build-essential \
     git \
-    python2 \
-    python3 \
-    python2-dev \
     mpich \
     curl \
     libblas-dev \
     liblapack-dev \
     autoconf \
     automake \
-    autoconf-archive
+    autoconf-archive \
+    python2
 
 RUN useradd \
   --create-home \
   lithomop_user
 
+# Installing python 2.3 in order to match the instructions from ./INSTALL
+#RUN curl -L -O "https://www.python.org/ftp/python/2.3/Python-2.3.tgz"; tar -zxvf Python-2.3.tgz; cd Python-2.3; ./configure BASECFLAGS=-U_FORTIFY_SOURCE; make; make install;
+
+# Need to create this link so that pythia will compile
 RUN ln -s /usr/bin/python2 /usr/bin/python;
 
-USER lithomop_user
-
 WORKDIR /home/lithomop_user
+
+USER lithomop_user
 
 ENV PETSC_DIR=/home/lithomop_user/petsc-2.3.3-p16
 
@@ -34,7 +36,10 @@ RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapsho
 
 ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
 
-RUN git clone "https://github.com/geodynamics/pythia.git"; cd pythia; autoupdate; mkdir aux-config;
+USER root
+
+RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.16/pythia-0.8.1.16.tar.gz"; tar -xvf pythia-0.8.1.16.tar.gz; cd pythia-0.8.1.16; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; python2 setup.py build; python2 setup.py build install;
+
+USER lithomop_user
 
 RUN git clone 'https://github.com/geodynamics/lithomop.git';
-
