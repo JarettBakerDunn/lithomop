@@ -7,8 +7,8 @@ RUN apt-get update && \
     gfortran \
     build-essential \
     git \
-    mpich \
     curl \
+    mpich \
     libblas-dev \
     liblapack-dev \
     autoconf \
@@ -32,7 +32,7 @@ USER lithomop_user
 
 ENV PETSC_DIR=/home/lithomop_user/petsc-2.3.3-p16
 
-RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-2.3.3.tar.gz"; tar -xvf petsc-2.3.3.tar.gz; cd petsc-2.3.3-p16; ./config/configure.py; make all;
+RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-2.3.3.tar.gz"; tar -xvf petsc-2.3.3.tar.gz; cd petsc-2.3.3-p16; mkdir externalpackages; cd externalpackages; curl -L -O https://ftp.mcs.anl.gov/pub/petsc/externalpackages/mpich2-1.0.5p4.tar.gz; tar -xvf mpich2-1.0.5p4.tar.gz; cd mpich2-1.0.5p4; make; make install; cd ..; cd ..; ./config/configure.py; make all; make install;
 
 ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
 

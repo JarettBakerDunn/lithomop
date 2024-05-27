@@ -17,9 +17,19 @@ Could not find a functional BLAS. Run with --with-blas-lib=<lib> to indicate the
  autoreconf
  automake --add-missing
  autoreconf
- ./configure --prefix=$HOME/cig
+ ./configure PYTHONPATH=/usr/local/lib/python2.7/dist-packages
  make
  make install
 
 
 when trying configure on lithomop, it now seems petsc is the problem: ./configure: line 3715: `CIT_PATH_PETSC(2.3.3)'
+petsc
+
+put in the directory /home/lithomop_user/petsc-2.3.3-p16/externalpackages the uncompressed, untared file obtained
+need to put mpich in the petsc/externalpackages folder. needs to be : ftp://ftp.mcs.anl.gov/pub/petsc/externalpackages/mpich2-1.0.5p4.tar.gz
+
+curl -L -O https://ftp.mcs.anl.gov/pub/petsc/externalpackages/mpich2-1.0.5p4.tar.gz
+
+looks like you need to configure and install mpi after downloaded and 
+
+need to use -prefix for the directory where to install mpi. I guess we install it where we download it?
