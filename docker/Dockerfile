@@ -8,7 +8,7 @@ RUN apt-get update && \
     build-essential \
     git \
     curl \
-    mpich \
+    #mpich \
     libblas-dev \
     liblapack-dev \
     autoconf \
@@ -30,16 +30,23 @@ WORKDIR /home/lithomop_user
 
 USER lithomop_user
 
-ENV PETSC_DIR=/home/lithomop_user/petsc-2.3.3-p16
+ENV PETSC_DIR=/home/lithomop_user/petsc-2.3.1-p19
 
-RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-2.3.3.tar.gz"; tar -xvf petsc-2.3.3.tar.gz; cd petsc-2.3.3-p16; mkdir externalpackages; cd externalpackages; curl -L -O https://ftp.mcs.anl.gov/pub/petsc/externalpackages/mpich2-1.0.5p4.tar.gz; tar -xvf mpich2-1.0.5p4.tar.gz; cd mpich2-1.0.5p4; make; make install; cd ..; cd ..; ./config/configure.py; make all; make install;
-
-ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
-
-USER root
-
-RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.16/pythia-0.8.1.16.tar.gz"; tar -xvf pythia-0.8.1.16.tar.gz; cd pythia-0.8.1.16; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; python2 setup.py build; python2 setup.py build install;
+RUN curl -L -O "https://ftp.mcs.anl.gov/pub/petsc/petsc-2.3.1.tar.gz"; tar -xvf petsc-2.3.1.tar.gz; cd petsc-2.3.1-p19; mkdir externalpackages; cd externalpackages; curl -L -O https://ftp.mcs.anl.gov/pub/petsc/externalpackages/mpich2-1.0.3.tar.gz; tar -xvf mpich2-1.0.3.tar.gz; cd mpich2-1.0.3; ./configure; make;
+#./configure; make; make install;
 
 USER lithomop_user
 
-RUN git clone 'https://github.com/geodynamics/lithomop.git';
+RUN cd petsc-2.3.1-p19; ./config/configure.py --with-mpi-dir=/home/lithomop_user/petsc-2.3.1-p19/externalpackages/mpich2-1.0.3; make all;
+#make; make install;
+# cd ..; cd ..; ./config/configure.py; make all; make install;
+
+#ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
+
+#USER root
+
+#RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.16/pythia-0.8.1.16.tar.gz"; tar -xvf pythia-0.8.1.16.tar.gz; cd pythia-0.8.1.16; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; python2 setup.py build; python2 setup.py build install;
+
+#USER lithomop_user
+
+#RUN git clone 'https://github.com/geodynamics/lithomop.git';

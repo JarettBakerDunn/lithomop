@@ -32,4 +32,10 @@ curl -L -O https://ftp.mcs.anl.gov/pub/petsc/externalpackages/mpich2-1.0.5p4.tar
 
 looks like you need to configure and install mpi after downloaded and 
 
-need to use -prefix for the directory where to install mpi. I guess we install it where we download it?
+need to use -prefix= for the directory where to install mpi. I guess we install it where we download it?
+
+this might be needed to configure mpich: ./config/configure.py --with-mpi-dir=/home/lithomop_user/petsc-2.3.3-p16/externalpackages/mpich2-1.0.3
+
+
+ran ./configure and make in mpich before running ./config/configure.py --with-mpi-dir=/home/lithomop_user/petsc-2.3.1-p19/externalpackages/mpich2-1.0.3. 
+allowed me to actual configure petsc. Seemed to work.
