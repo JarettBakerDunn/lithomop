@@ -7,7 +7,7 @@ AC_INIT([Lithomop3d], [0.7.3], [cig-short@geodynamics.org])
 AC_CONFIG_AUX_DIR([./aux-config])
 AC_CONFIG_SRCDIR([lithomop3d/applications/lithomop3dapp.py])
 AC_CONFIG_HEADER([portinfo])
-AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_MACRO_DIR([./m4])
 AM_INIT_AUTOMAKE([foreign])
 
 # 'configure' options
