@@ -14,7 +14,8 @@ RUN apt-get update && \
     autoconf \
     automake \
     autoconf-archive \
-    python2
+    python2 \
+    libtool
 
 RUN useradd \
   --create-home \
@@ -42,4 +43,5 @@ RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.1
 
 USER lithomop_user
 
-RUN git clone 'https://github.com/jarettbakerdunn/lithomop.git';
+RUN git clone 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout devel; 
+#autoreconf; mkdir aux-config; autoreconf; automake --add-missing; exit 0;
