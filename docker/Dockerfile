@@ -45,3 +45,4 @@ USER lithomop_user
 
 RUN git clone --recurse-submodules 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout devel; git fetch; git pull; mkdir aux-config; autoreconf -i;
 #autoreconf; mkdir aux-config; autoreconf; automake --add-missing; exit 0;
+WORKDIR /home/lithomop_user/lithomop
