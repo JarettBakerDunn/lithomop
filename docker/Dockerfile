@@ -43,7 +43,5 @@ RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.1
 
 USER lithomop_user
 
-RUN cd ..;
-
-RUN git clone 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout devel; git pull; mkdir aux-config;
+RUN git clone --recurse-submodules 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout devel; git fetch; git pull; mkdir aux-config; autoreconf -i;
 #autoreconf; mkdir aux-config; autoreconf; automake --add-missing; exit 0;
