@@ -7,7 +7,7 @@ SUBDIRS = lithomop3d
 
 EXTRA_DIST = \
 	setup.py \
-	lithomop3d/lithomop3d/__init__.py
+	archimedes/__init__.py
 	
 install-data-hook:
 	top_builddir=`$(am__cd) $(top_builddir) && pwd` && \
