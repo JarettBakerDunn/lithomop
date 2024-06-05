@@ -52,6 +52,6 @@ RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.1
 
 ENV PYTHONPATH=/usr/bin/python
 
-RUN git clone --recurse-submodules 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout c05108647fa40fc9a2319fe093e5aafb3af55d2e; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; mkdir aux-config; autoreconf -i;
+RUN git clone --recurse-submodules 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout devel; git fetch; git pull; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; mkdir aux-config; autoreconf -i;
 #autoreconf; mkdir aux-config; autoreconf; automake --add-missing; exit 0;
 WORKDIR /home/lithomop_user/lithomop
