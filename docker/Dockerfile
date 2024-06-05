@@ -7,25 +7,30 @@ RUN apt-get update && \
     gfortran \
     build-essential \
     git \
-    mpich \
     curl \
     libblas-dev \
     liblapack-dev \
     autoconf \
     automake \
     autoconf-archive \
-    python2 \
-    libtool
+    libpython2.7-dev \
+    libpython2.7 \
+    python2.7 \
+    libtool \
+    libc6-dev \
+    mpich \
+    sudo
 
 RUN useradd \
   --create-home \
-  lithomop_user
+  lithomop_user && echo "lithomop_user:password" | chpasswd
 
-# Installing python 2.3 in order to match the instructions from ./INSTALL
-#RUN curl -L -O "https://www.python.org/ftp/python/2.3/Python-2.3.tgz"; tar -zxvf Python-2.3.tgz; cd Python-2.3; ./configure BASECFLAGS=-U_FORTIFY_SOURCE; make; make install;
+
+
+RUN sudo adduser lithomop_user sudo
 
 # Need to create this link so that pythia will compile
-RUN ln -s /usr/bin/python2 /usr/bin/python;
+RUN ln -s /usr/bin/python2.7 /usr/bin/python;
 
 WORKDIR /home/lithomop_user
 
@@ -33,19 +38,14 @@ USER lithomop_user
 
 ENV PETSC_DIR=/home/lithomop_user/petsc-2.3.3-p16
 
-RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-2.3.3.tar.gz"; tar -xvf petsc-2.3.3.tar.gz; cd petsc-2.3.3-p16; ./config/configure.py; make all;
+RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-2.3.3.tar.gz"; tar -xvf petsc-2.3.3.tar.gz; cd petsc-2.3.3-p16; mkdir externalpackages; cd externalpackages; curl -L -O "https://www.mpich.org/static/downloads/1.0.5p4/mpich2-1.0.5p4.tar.gz"; tar -xvf mpich2-1.0.5p4.tar.gz; cd mpich2-1.0.5p4; ./configure; echo "password" | sudo -S make all; echo "password" | sudo -S make install; 
+RUN cd petsc-2.3.3-p16; ./config/configure.py --with_mpi=1; PETSC_ARCH=linux-gnu-c-debug; export PETSC_ARCH; make all; make install;
 
-ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
+#ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
 
-USER root
+RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.16/pythia-0.8.1.16.tar.gz"; tar -xvf pythia-0.8.1.16.tar.gz; cd pythia-0.8.1.16; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; echo "password" | sudo -S python setup.py build; echo "password" | sudo -S python setup.py build install;
 
-RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.16/pythia-0.8.1.16.tar.gz"; tar -xvf pythia-0.8.1.16.tar.gz; cd pythia-0.8.1.16; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; python2 setup.py build; python2 setup.py build install;
-
-USER lithomop_user
 
 RUN git clone --recurse-submodules 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout devel; git fetch; git pull; mkdir aux-config; autoreconf -i;
 #autoreconf; mkdir aux-config; autoreconf; automake --add-missing; exit 0;
 WORKDIR /home/lithomop_user/lithomop
-
-
-USER root
