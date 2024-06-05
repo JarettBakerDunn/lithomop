@@ -19,7 +19,8 @@ RUN apt-get update && \
     libtool \
     libc6-dev \
     mpich \
-    sudo
+    sudo \
+    nano
 
 RUN useradd \
   --create-home \
@@ -36,6 +37,10 @@ WORKDIR /home/lithomop_user
 
 USER lithomop_user
 
+#apt will install pip3, so need to do this to install pip 2.7
+RUN curl -L -O "https://bootstrap.pypa.io/pip/2.7/get-pip.py"; echo "password" | sudo -S python2.7 get-pip.py; pip install setuptools; pip install ez_setup;
+
+
 ENV PETSC_DIR=/home/lithomop_user/petsc-2.3.3-p16
 
 RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-2.3.3.tar.gz"; tar -xvf petsc-2.3.3.tar.gz; cd petsc-2.3.3-p16; mkdir externalpackages; cd externalpackages; curl -L -O "https://www.mpich.org/static/downloads/1.0.5p4/mpich2-1.0.5p4.tar.gz"; tar -xvf mpich2-1.0.5p4.tar.gz; cd mpich2-1.0.5p4; ./configure; echo "password" | sudo -S make all; echo "password" | sudo -S make install; 
@@ -45,7 +50,8 @@ RUN cd petsc-2.3.3-p16; ./config/configure.py --with_mpi=1; PETSC_ARCH=linux-gnu
 
 RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.16/pythia-0.8.1.16.tar.gz"; tar -xvf pythia-0.8.1.16.tar.gz; cd pythia-0.8.1.16; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; echo "password" | sudo -S python setup.py build; echo "password" | sudo -S python setup.py build install;
 
+ENV PYTHONPATH=/usr/bin/python
 
-RUN git clone --recurse-submodules 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout devel; git fetch; git pull; mkdir aux-config; autoreconf -i;
+RUN git clone --recurse-submodules 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout c05108647fa40fc9a2319fe093e5aafb3af55d2e; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; mkdir aux-config; autoreconf -i;
 #autoreconf; mkdir aux-config; autoreconf; automake --add-missing; exit 0;
 WORKDIR /home/lithomop_user/lithomop
