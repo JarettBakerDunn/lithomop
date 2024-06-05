@@ -1,8 +1,7 @@
+from ez_setup import use_setuptools
+use_setuptools()
 
-from archimedes import use_merlin
-use_merlin()
-
-from merlin import setup, find_packages
+from setuptools import setup, find_packages
 
 setup(
     

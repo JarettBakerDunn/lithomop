@@ -24,7 +24,7 @@ AM_CONDITIONAL([COND_EMBEDDING], [test "$want_embedding" = yes])
 AM_PATH_PYTHON([2.3])
 CIT_PYTHON_SYSCONFIG
 
-# Check for Python modules and packages. ERROR CAUSED HERE I THINK.
+# Check for Python modules and packages.
 CIT_PYTHON_EGG_SETUP
 
 # Check for PETSc.
