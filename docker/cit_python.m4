@@ -460,10 +460,4 @@ if test -n "$2" ; then
   fi
 fi
 
-]) dnl CIT_PYTHON_MODULE
-
-
-
-dnl end of file
-
-
+])
