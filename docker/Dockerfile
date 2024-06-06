@@ -54,7 +54,7 @@ RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.1
 
 RUN git clone --recurse-submodules 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout devel; git fetch; git pull; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; mkdir aux-config; autoreconf -i;
 
-RUN cd lithomop; git checkout devel; git fetch; git pull; mv docker/ez_setup.py /home/lithomop_user/.local/lib/python2.7/site-packages/; mv docker/cit_python.m4 /home/lithomop_user/lithomop/m4;
+RUN cd lithomop; git checkout devel; git fetch; git pull; mv docker/ez_setup.py /home/lithomop_user/.local/lib/python2.7/site-packages/; mv docker/cit_python.m4 /home/lithomop_user/lithomop/m4/cit_python.m4;
 
 #RUN cd lithomop; git checkout devel; git fetch; git pull; autoreconf -i;
 
