@@ -462,7 +462,4 @@ fi
 
 ]) dnl CIT_PYTHON_MODULE
 
-
-
-
 dnl end of file
