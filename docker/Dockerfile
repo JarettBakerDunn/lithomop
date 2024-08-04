@@ -46,16 +46,10 @@ ENV PETSC_DIR=/home/lithomop_user/petsc-2.3.3-p16
 RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-2.3.3.tar.gz"; tar -xvf petsc-2.3.3.tar.gz; cd petsc-2.3.3-p16; mkdir externalpackages; cd externalpackages; curl -L -O "https://www.mpich.org/static/downloads/1.0.5p4/mpich2-1.0.5p4.tar.gz"; tar -xvf mpich2-1.0.5p4.tar.gz; cd mpich2-1.0.5p4; ./configure; echo "password" | sudo -S make all; echo "password" | sudo -S make install; 
 RUN cd petsc-2.3.3-p16; ./config/configure.py --with_mpi=1; PETSC_ARCH=linux-gnu-c-debug; export PETSC_ARCH; make all; make install;
 
-#ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
-
 RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.16/pythia-0.8.1.16.tar.gz"; tar -xvf pythia-0.8.1.16.tar.gz; cd pythia-0.8.1.16; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; echo "password" | sudo -S python setup.py build; echo "password" | sudo -S python setup.py build install;
 
-#ENV PYTHONPATH=/usr/bin/python
+RUN git clone --recurse-submodules 'https://github.com/geodynamics/lithomop.git'; cd lithomop; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; mkdir aux-config; autoreconf -i;
 
-RUN git clone --recurse-submodules 'https://github.com/jarettbakerdunn/lithomop.git'; cd lithomop; git checkout devel; git fetch; git pull; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; mkdir aux-config; autoreconf -i;
-
-RUN cd lithomop; git checkout devel; git fetch; git pull; mv docker/ez_setup.py /home/lithomop_user/.local/lib/python2.7/site-packages/; mv docker/cit_python.m4 /home/lithomop_user/lithomop/m4/cit_python.m4;
-
-#RUN cd lithomop; git checkout devel; git fetch; git pull; autoreconf -i;
+RUN cd lithomop; mv docker/ez_setup.py /home/lithomop_user/.local/lib/python2.7/site-packages/; mv docker/cit_python.m4 /home/lithomop_user/lithomop/m4/cit_python.m4;
 
 WORKDIR /home/lithomop_user/lithomop
