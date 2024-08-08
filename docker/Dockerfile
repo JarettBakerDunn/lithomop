@@ -27,7 +27,6 @@ RUN useradd \
   lithomop_user && echo "lithomop_user:password" | chpasswd
 
 
-
 RUN sudo adduser lithomop_user sudo
 
 # Need to create this link so that pythia will compile
@@ -41,13 +40,12 @@ USER lithomop_user
 RUN curl -L -O "https://bootstrap.pypa.io/pip/2.7/get-pip.py"; echo "password" | sudo -S python2.7 get-pip.py; pip install setuptools; pip install ez_setup;
 
 
-ENV PETSC_DIR=/home/lithomop_user/petsc-2.3.3-p16
-ENV PETSC_ARCH=linux-gnu-c-debug
+ENV PETSC_DIR="/home/lithomop_user/petsc-2.3.3-p16"
+ENV PETSC_ARCH="/home/lithomop_user/petsc-2.3.3-p16/lib/linux-gnu-c-debug"
+ENV PATH="/home/lithomop_user/petsc-2.3.3-p16/externalpackages/mpich2-1.0.5p4/bin:${PATH}"
 
 RUN curl -L -O "https://web.cels.anl.gov/projects/petsc/download/release-snapshots/petsc-2.3.3.tar.gz"; tar -xvf petsc-2.3.3.tar.gz; cd petsc-2.3.3-p16; mkdir externalpackages; cd externalpackages; curl -L -O "https://www.mpich.org/static/downloads/1.0.5p4/mpich2-1.0.5p4.tar.gz"; tar -xvf mpich2-1.0.5p4.tar.gz; cd mpich2-1.0.5p4; ./configure; echo "password" | sudo -S make all; echo "password" | sudo -S make install; 
 RUN cd petsc-2.3.3-p16; ./config/configure.py PETSC_ARCH=linux-gnu-c-debug --with_mpi=1; make all PETSC_ARCH=linux-gnu-c-debug; make install PETSC_ARCH=linux-gnu-c-debug;
-
-#ENV PATH=$PETSC_DIR/externalpackages/mpich2-1.0.3/linux-gnu-c-real-debug/bin:$PATH
 
 RUN curl -L -O "https://github.com/geodynamics/pythia/releases/download/v0.8.1.16/pythia-0.8.1.16.tar.gz"; tar -xvf pythia-0.8.1.16.tar.gz; cd pythia-0.8.1.16; curl -L -O "https://pypi.python.org/packages/2.7/s/setuptools/setuptools-0.6c11-py2.7.egg"; echo "password" | sudo -S python setup.py build; echo "password" | sudo -S python setup.py build install;
 
